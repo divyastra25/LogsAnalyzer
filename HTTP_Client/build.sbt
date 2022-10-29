@@ -15,11 +15,8 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-http" % AkkaHttpVersion
 )
 
-libraryDependencies ++= Seq(
-  "io.grpc" % "grpc-netty" % scalapb.compiler.Version.grpcJavaVersion,
-  "com.thesamet.scalapb" %% "scalapb-runtime-grpc" % scalapb.compiler.Version.scalapbVersion
-)
-
-Compile / PB.targets := Seq(
-  scalapb.gen() -> (Compile / sourceManaged).value / "scalapb"
-)
+libraryDependencies += "com.typesafe" % "config" % "1.4.2"
+libraryDependencies += "org.slf4j" % "slf4j-api" % "2.0.3"
+libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.3.3"
+libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.14"
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.14" % "test"
