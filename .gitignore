@@ -3,4 +3,6 @@
 .vscode/
 project/
 target/
+logs/
+log/
 .DS_Store
