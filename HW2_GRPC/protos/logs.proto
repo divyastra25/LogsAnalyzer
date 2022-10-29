@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package logs;
+
+//Log Retrieving Service Definition
+service LogRetriever {
+    rpc GetMessages (GetMessageReq) returns (MessagesReply) {}
+}
+
+//The message formate for a request, includes a timstamp and a delta interval
+message GetMessageReq {
+    string start = 1;
+    string delta = 2;
+}
+
+//The message reply format
+message MessagesReply {
+    int32 startIndex = 1;
+    int32 endIndex = 2;
+}
