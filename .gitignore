@@ -6,3 +6,5 @@ target/
 logs/
 log/
 .DS_Store
+local_lambda_function.py
+LogFileGenerator.2022-10-29.log
