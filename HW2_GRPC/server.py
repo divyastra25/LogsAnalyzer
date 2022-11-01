@@ -11,14 +11,15 @@ class LogRetrieverService(logs_pb2_grpc.LogRetrieverServicer):
     def GetMessages(self, request, context):
         print("GetMessages request received!")
         logging.info("GetMessages request received!")
-        endpoint = f"https://qnvqyz4nka.execute-api.us-east-2.amazonaws.com/test/indexes?start={request.start}&delta={request.delta}"
+        endpoint = f"https://qnvqyz4nka.execute-api.us-east-2.amazonaws.com/test/indexes?date={request.date}&start={request.start}&delta={request.delta}"
         results = requests.get(endpoint)
         print("results received")
         logging.info("Results Received!")
+        print(results.json()["message"])
 
         logs_reply = logs_pb2.MessagesReply()
-        logs_reply.startIndex = results.json()["startIndex"]
-        logs_reply.endIndex = results.json()["endIndex"]
+        logs_reply.message = results.json()["message"]
+        logs_reply.coded_logs.extend(results.json()["logs_coded"])
         
         logging.info("Sending Reply")
         return logs_reply

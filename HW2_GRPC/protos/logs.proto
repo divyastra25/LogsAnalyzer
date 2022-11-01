@@ -9,12 +9,13 @@ service LogRetriever {
 
 //The message formate for a request, includes a timstamp and a delta interval
 message GetMessageReq {
-    string start = 1;
-    string delta = 2;
+    string date = 1;
+    string start = 2;
+    string delta = 3;
 }
 
 //The message reply format
 message MessagesReply {
-    int32 startIndex = 1;
-    int32 endIndex = 2;
+    string message = 1;
+    repeated string coded_logs = 2;
 }

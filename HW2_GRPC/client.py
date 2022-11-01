@@ -19,13 +19,14 @@ def run():
         stub = logs_pb2_grpc.LogRetrieverStub(channel)
         logging.info("Client stub created!")
         
-        get_msg_req = logs_pb2.GetMessageReq(start="17:44:33", delta="00:01:02")
+        get_msg_req = logs_pb2.GetMessageReq(date="2022-11-01", start="01:40:33", delta="00:20:02")
         logging.info("GetMessageReq Sent!")
 
         logs_reply = stub.GetMessages(get_msg_req)
         logging.info("GetMessages response receieved!")
         logging.info(logs_reply)
-        print(logs_reply)
+        print(logs_reply.message)
+        print(len(logs_reply.coded_logs))
 
 if __name__ == "__main__":
     logging.info("Running the client")
