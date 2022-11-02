@@ -30,6 +30,7 @@ sbt clean compile
 ```
 sbt run
 ```
+After running it, you should see the results on the console output.
 
 ### gRPC:
 Navigate to the HW2_GRPC sub-project of the repo.
@@ -51,3 +52,5 @@ python3 server.py
 python3 client.py
 ```
 After running the client it should output the results with the appropriate response from the lambda.
+
+That's all!
