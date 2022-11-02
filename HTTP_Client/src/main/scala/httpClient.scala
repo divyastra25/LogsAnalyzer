@@ -11,6 +11,8 @@ package akkaHttp {
   object httpClient {
     implicit val system: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, "SingleRequest")
     implicit val executionContext: ExecutionContextExecutor = system.executionContext
+
+    // logger for logging progression of request
     val logger: Logger = LoggerFactory.getLogger(classOf[httpClient.type])
 
     def sendRequest(date: String, start: String, delta: String): Future[String] = {
@@ -30,7 +32,7 @@ package akkaHttp {
 
     def main(args: Array[String]): Unit = {
       logger.info("Client Started")
-      val confFile = ConfigFactory.load()
+      val confFile = ConfigFactory.load()  // load "application.conf" config file
       val params = confFile.getConfig("client")
       logger.info("Config File Loaded")
 
@@ -38,7 +40,7 @@ package akkaHttp {
       data.foreach(x => {
         println(s"Response Data: $x")
         logger.info("Results Printed")
-        system.terminate()
+        system.terminate()  // terminating the process for client
       })
     }
   }

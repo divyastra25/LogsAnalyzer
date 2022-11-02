@@ -5,11 +5,15 @@ import os
 import hashlib
 import re
 
+# binary search returns the index of logs after or before a timestamp depending on
+# if it is start timestand of end timestamp
 def binarySearchTime(logs, time, isStart):
     low = 0
     high = len(logs) - 1
     mid = 0
 
+    # Have used a while loop because AWS Lambda has limited memory and using recursion would create a
+    # new array of logs on stack frame at each recursive call, which would be inefficient in terms of space.
     while low <= high:
         mid = (low + high) // 2
         currLogTime = datetime.strptime(logs[mid].split()[0], "%H:%M:%S.%f")
@@ -24,15 +28,18 @@ def binarySearchTime(logs, time, isStart):
     return low if isStart else high
 
 def lambda_handler(event, context):
+    # construct the log file name based on date queryParameter
     date = event["queryStringParameters"]["date"]
     logFilename = f"LogFileGenerator.{date}.log"
     
     results = {}
     
     try:
+        # try opening and reading the log file
         f = open(f"/mnt/logs/LogFileGenerator/log/{logFilename}", "r")
         log_list = f.readlines()
     except IOError:
+        # log file could not be opened meaning it does not exist
         print(f"Incorrect Date/Format or No Logs For The Date: {date}")
         results["message"] = f"Incorrect Date/Format or No Logs For The Date: {date}"
         results["logs_coded"] = []
@@ -48,6 +55,7 @@ def lambda_handler(event, context):
         startTime = datetime.strptime(event["queryStringParameters"]["start"], "%H:%M:%S")
         deltaTime = datetime.strptime(event["queryStringParameters"]["delta"], "%H:%M:%S")
     except:
+        # Parameter timestamps are not in the correct format
         print("Time input format incorrect. Enter in HH:MM:SS format.")
         results["message"] = "Time input format incorrect. Enter in HH:MM:SS format."
         results["logs_coded"] = []
@@ -66,7 +74,7 @@ def lambda_handler(event, context):
     endIndex = binarySearchTime(log_list, endTime, False)
     
     if startIndex <= endIndex:
-        
+        # logs found between the interval, check if they contain the regex pattern and return them
         messages_list = []
         idx = startIndex
         while (idx <= endIndex):
@@ -88,6 +96,7 @@ def lambda_handler(event, context):
 
         return response
     else:
+        # No logs found within the interval
         print("Interval not present or No logs in the interval")
         results["message"] = "Interval not present or No logs in the interval"
         results["logs_coded"] = []

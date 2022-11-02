@@ -7,14 +7,15 @@ service LogRetriever {
     rpc GetMessages (GetMessageReq) returns (MessagesReply) {}
 }
 
-//The message formate for a request, includes a timstamp and a delta interval
+//The message formate for a request, includes a timstamp, a delta and date
 message GetMessageReq {
     string date = 1;
     string start = 2;
     string delta = 3;
 }
 
-//The message reply format
+//The message reply, give a message explaining the result
+//coded_logs contain the logs hash codes if any found
 message MessagesReply {
     string message = 1;
     repeated string coded_logs = 2;
