@@ -13,16 +13,17 @@ The logs are produced on a daily basis. The lambda function takes in date, start
 *Note:* The binary search uses a while loop because lambda memory is limited and using recursion will cause it to reproduce the logs array in each stack frame of the recursive call. Thus, recursion is not effient in terms of memory of the lambda.
 
 ### AkkaHTTP:
- AkkaHTTP is a toolkit for consuming HTTP-based services in Scala and Java. The HTTP_Client is a Scala sub-project in the repo which uses the AkkaHTTP module to make RESTful calls to the AWS API Gateway which triggers the lambda function.
+AkkaHTTP is a toolkit for consuming HTTP-based services in Scala and Java. The HTTP_Client is a Scala sub-project in the repo which uses the AkkaHTTP module to make RESTful calls to the AWS API Gateway which triggers the lambda function.
 
 ### gRPC:
 gRPC is a high performance RPC framework that can be implemented in many lanaguages. The HW2_GRPC sub-project is a python project that implements gRPC. It has a client that makes a rpc call to the server with input parameters and then the server calls makes a HTTP request to the AWS API Gateway which triggers the lambda and returns a response, the gRPC server then returns that response back to gRPC client. The communication between the gRPC server and client is done through protocol buffers, which is a very effient and fast way to (de)serialize data.
 
 ## **Execution:**
-**Lambda:** Firstly, attach EFS to the log producing code so that logs can be stored in EFS.
-Then, create the lambda function with access to the same EFS. Add AWS API Gateway requests as a trigger to the lambda function.
+### Lambda:
+Firstly, attach EFS to the log producing code so that logs can be stored in EFS. Then, create the lambda function with access to the same EFS. Add AWS API Gateway requests as a trigger to the lambda function.
 
-**AkkaHTTP:** Make sure to have Java and SBT installed on your machine. Natigate to the HTTP_Client sub-project of the repo. Adjust the configurations in the application.conf file in src/main/resources/. Then, run the following commands to compile and run the project, which prints the results of the query/log analysis:
+### AkkaHTTP:
+Make sure to have Java and SBT installed on your machine. Natigate to the HTTP_Client sub-project of the repo. Adjust the configurations in the application.conf file in src/main/resources/. Then, run the following commands to compile and run the project, which prints the results of the query/log analysis:
 ```
 sbt clean compile
 ```
@@ -30,8 +31,7 @@ sbt clean compile
 sbt run
 ```
 
-
-**gRPC:** 
+### gRPC:
 Navigate to the HW2_GRPC sub-project of the repo.
 
 pip install the grpcio-tools with the following command:
