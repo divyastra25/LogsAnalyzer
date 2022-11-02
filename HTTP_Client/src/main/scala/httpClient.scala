@@ -5,6 +5,7 @@ import akka.actor.typed.scaladsl.Behaviors
 import com.typesafe.config.ConfigFactory
 import org.slf4j.{Logger, LoggerFactory}
 
+import scala.concurrent.Await
 import scala.concurrent.duration.DurationInt
 import scala.concurrent.{ExecutionContextExecutor, Future}
 package akkaHttp {
@@ -36,12 +37,11 @@ package akkaHttp {
       val params = confFile.getConfig("client")
       logger.info("Config File Loaded")
 
-      val data = sendRequest(params.getString("date"), params.getString("start"), params.getString("delta"))
-      data.foreach(x => {
-        println(s"Response Data: $x")
-        logger.info("Results Printed")
-        system.terminate()  // terminating the process for client
-      })
+      val data = Await.result(sendRequest(params.getString("date"), params.getString("start"), params.getString("delta")), 5.seconds)
+      println(s"Response Data: $data")
+      logger.info("Results Printed")
+      system.terminate()  // terminating the process for client
+
     }
   }
 }
