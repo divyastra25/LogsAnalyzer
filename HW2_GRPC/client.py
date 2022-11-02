@@ -28,6 +28,7 @@ def run():
         logging.info("GetMessages response receieved!")
         logging.info(logs_reply)
         print(logs_reply.message)
+        print(logs_reply.coded_logs)
         print(len(logs_reply.coded_logs))
 
 if __name__ == "__main__":

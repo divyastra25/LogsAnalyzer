@@ -15,7 +15,7 @@ package akkaHttp {
 
     def sendRequest(date: String, start: String, delta: String): Future[String] = {
       // sends HTTP request to API Gateway and waits for HttpResponse
-      val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(uri = s"https://qnvqyz4nka.execute-api.us-east-2.amazonaws.com/test/indexes?start=$start&delta=$delta&date=$date"))
+      val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(uri = s"https://qggew40x1g.execute-api.us-east-2.amazonaws.com/demo/logs?start=$start&delta=$delta&date=$date"))
       logger.info("HTTP Request Sent!")
 
       // returns data structure containing payload

@@ -11,7 +11,7 @@ class LogRetrieverService(logs_pb2_grpc.LogRetrieverServicer):
     def GetMessages(self, request, context):
         print("GetMessages request received!")
         logging.info("GetMessages request received!")
-        endpoint = f"https://qnvqyz4nka.execute-api.us-east-2.amazonaws.com/test/indexes?date={request.date}&start={request.start}&delta={request.delta}"
+        endpoint = f"https://qggew40x1g.execute-api.us-east-2.amazonaws.com/demo/logs?date={request.date}&start={request.start}&delta={request.delta}"
         results = requests.get(endpoint)
         print("results received")
         logging.info("Results Received!")
