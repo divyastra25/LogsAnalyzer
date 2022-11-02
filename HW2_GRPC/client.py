@@ -3,23 +3,25 @@ import grpc
 import logs_pb2
 import logs_pb2_grpc
 import logging
+from configparser import ConfigParser
 
 logging.basicConfig(filename="logs/client_logs.log", level=logging.NOTSET)
-# from configparser import ConfigParser
 
-# configFile = "config.ini"
-# config = ConfigParser()
-# config.read(configFile)
+configFile = "config.ini"
+config = ConfigParser()
+config.read(configFile)
 
-# startTime = str(config['client']['start'])
-# deltaTime = str(config['client']['delta'])
+date = config['client']['date']
+startTime = str(config['client']['start'])
+deltaTime = str(config['client']['delta'])
 
 def run():
     with grpc.insecure_channel("localhost:50051") as channel:
         stub = logs_pb2_grpc.LogRetrieverStub(channel)
         logging.info("Client stub created!")
         
-        get_msg_req = logs_pb2.GetMessageReq(date="2022-11-01", start="01:40:33", delta="00:20:02")
+        # get_msg_req = logs_pb2.GetMessageReq(date="2022-11-01", start="00:40:33", delta="00:20:02")
+        get_msg_req = logs_pb2.GetMessageReq(date=date, start=startTime, delta=deltaTime)
         logging.info("GetMessageReq Sent!")
 
         logs_reply = stub.GetMessages(get_msg_req)
