@@ -3,10 +3,10 @@
 ### Name: Divya Patel
 ### Link to Video: https://youtu.be/1HRtp3jZ_Z4
 
-## Overview:
+## **Overview:**
 This is an implementation of a Log Finder/Analyzer using AWS Lambda and AWS Elastic File System. AWS EFS is mounted on an EC2 Instance that continuously produces logs and stores them in EFS. AWS Lambda houses the code for analyzing the logs and accesses the same logs produced by EC2 using EFS. The analysis to be done is to find logs within the time interval and see if they match a regex pattern, those that do should be returned as a md-5 generated hash code.
 
-## Implementation:
+## **Implementation:**
 ### Lambda:
 The logs are produced on a daily basis. The lambda function takes in date, start timestamp and delta timestamp as query string parameters. Based on the date the log file is loaded and read. Then binary search is performed to find the start and end indexes for the logs within the time interval. Then, based on the logs appropriate response with a message is constructed and returned. The lambda function is exposed to AWS API Gateway so that it can be triggered using REST API.
 
@@ -18,7 +18,7 @@ The logs are produced on a daily basis. The lambda function takes in date, start
 ### gRPC:
 gRPC is a high performance RPC framework that can be implemented in many lanaguages. The HW2_GRPC sub-project is a python project that implements gRPC. It has a client that makes a rpc call to the server with input parameters and then the server calls makes a HTTP request to the AWS API Gateway which triggers the lambda and returns a response, the gRPC server then returns that response back to gRPC client. The communication between the gRPC server and client is done through protocol buffers, which is a very effient and fast way to (de)serialize data.
 
-## Execution:
+## **Execution:**
 **Lambda:** Firstly, attach EFS to the log producing code so that logs can be stored in EFS.
 Then, create the lambda function with access to the same EFS. Add AWS API Gateway requests as a trigger to the lambda function.
 
