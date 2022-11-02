@@ -30,11 +30,11 @@ def lambda_handler(event, context):
     results = {}
     
     try:
-        f = open(f"/mnt/logs/{logFilename}", "r")
+        f = open(f"/mnt/logs/LogFileGenerator/log/{logFilename}", "r")
         log_list = f.readlines()
     except IOError:
-        print(f"Incorrect Date/Format or No Logs For The Date: {sys.argv[1]}")
-        results["message"] = f"Incorrect Date/Format or No Logs For The Date: {sys.argv[1]}"
+        print(f"Incorrect Date/Format or No Logs For The Date: {date}")
+        results["message"] = f"Incorrect Date/Format or No Logs For The Date: {date}"
         results["logs_coded"] = []
         
         response = {}
@@ -70,7 +70,7 @@ def lambda_handler(event, context):
         messages_list = []
         idx = startIndex
         while (idx <= endIndex):
-            log_message = log_list[idx].split()[5]
+            log_message = log_list[idx].split()[4]
             match = re.search("([a-c][e-g][0-3]|[A-Z][5-9][f-w]){5,15}", log_message)
             if match is not None:
                 messages_list.append(hashlib.md5(log_message.encode()).hexdigest())
